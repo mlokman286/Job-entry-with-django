@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container-fluid">
+    <h1 class='text-primary text-center mt-5 '>Here will find our top talent people.</h1>
+    <div>
+       {% for applicant in applicants %}
+        <div class="testimonial-item bg-light rounded p-3 shadow  my-2  w-75 overflow-hidden mx-auto">
+            <div class='d-flex justify-content-between '>
+                <img class="img-fluid flex-shrink-0 rounded-pill" src="{{applicant.profile_pic.url}}"
+                style="width: 100px; height: 100px;">
+            <div><a class='btn btn-info' href="{% url "applicant" applicant.id %}">View Profile</a></div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="ps-3">
+                    <h5 class="mb-1">{{applicant.first_name}} {{applicant.last_name}}</h5>
+                    <small>{{applicant.profession}}</small>
+                    <p>Address: {{applicant.address}}</p>
+                </div>
+            </div>
+        </div>
+       {% endfor %}
+    </div>
+</section>
+{% endblock content %}

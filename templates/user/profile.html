@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container-fluid">
+    <div class="testimonial-item bg-light rounded p-4">
+        <div class="d-flex">
+            <img class="img-fluid flex-shrink-0 rounded-bottom-pill shadow-lg" src="{{profile.profile_pic.url}}" style="width: 100px; height: 100px;">
+            <div class="ps-3">
+                <h5 class="mb-1">{{profile.first_name}} {{profile.last_name}}</h5>
+                <small>{{profile.profession}}</small><br>
+                <a class='btn btn-primary' target='_blank' href="{{profile.cv.url}}">Download CV</a>
+                {% if request.user.user_type == 'Applicant' %}
+                <a class='btn btn-primary' href="{% url "resume" %}">Update Resume</a>
+                {% endif %}
+            </div>
+        </div>
+        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+        <div class='card p-2 '>{{profile.about_self|safe}}</div>
+        <div class="d-flex justify-content-between  mt-5 ">
+            <div class="ps-3">
+                <h5 class="mb-1">Address</h5>
+                <small>{{profile.address}}</small>
+                <div class="py-3 mt-5">
+                    <h5 class="mb-1">Skills</h5>
+                    <small>{{profile.skills|safe}}</small>
+                </div>
+            </div>
+            <div class="ps-3">
+                <h5 class="mb-1">Education</h5>
+                <small>{{profile.education|safe}}</small>
+            </div>
+        </div>
+        <div class="d-flex gap-5  ">
+            
+            
+        </div>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<section>
+     <div class="container mt-5">
+      <div class="card w-75 mx-auto shadow">
+        <div class="bg-primary text-white px-3 py-1 text-center display-6 animated slideInDown"><span>Job Post Form</span></div>
+        {% include "include/messages.html" %}
+
+        <form class='p5 mt-5 ' action="#" method = 'post' enctype="multipart/form-data">
+          {% csrf_token %}
+          {{form.media}}
+          <div class="px-5 ">
+            <label for="">Job Title</label>
+            {% render_field form.title class='form-control' placeholder='Job Title' %}
+          </div>
+
+          <div class="px-5">
+            <label for="">Job Type</label>
+            {% render_field form.job_type class='form-select' %}
+          </div>
+
+          <div class="px-5">
+            <label for="">Status</label>
+            {% render_field form.job_status class='form-select' %}
+          </div>
+
+          <div class="px-5 ">
+            <label for="">Location:</label><br>
+            {% render_field form.location class='form-control' placeholder='Job location' %}
+          </div>
+          
+          <div class="px-5">
+            <label for="">State</label>
+            {% render_field form.state class='form-select' %}
+          </div>
+          
+          <div class="px-5">
+            <label for="">Category</label>
+            {% render_field form.category class='form-select' %}
+          </div>
+
+          <div class="px-5">
+            <label for="">Salary</label>
+            {% render_field form.salary class='form-control' placeholder='Salary' %}
+          </div>
+          
+
+          <div class="px-5">
+            <label for="">Vacancy</label>
+            {% render_field form.vacancy class='form-control' placeholder='No. of opening post' %}
+          </div>
+          
+          <div class="px-5 ">
+            <label for="">Responsibilities:</label><br>
+            {% render_field form.responsibilities  %}
+          </div>
+          
+          <div class="px-5 ">
+            <label for="">Requirments:</label><br>
+            {% render_field form.requirments  %}
+          </div>
+
+
+          <div class="px-5">
+            Deadline date:
+            {% render_field form.deadline class='form-control w-25' type='date' %}
+          </div>
+
+          <div class="px-5 text-center py-2">
+            <input class='btn btn-primary py-md-3 px-md-5 me-3 animated slideInUp' type="submit" value="Save Resume">
+          </div>
+        </form>
+
+      </div>
+    </div>
+</section>
+{% endblock content %}

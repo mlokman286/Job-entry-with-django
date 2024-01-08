@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block content %}
+{% include "include/messages.html" %}
+{% if request.user.user_type == 'Applicant' %}
+<section class="container py-5">
+    <h1 class="text-priamry display-6 ">
+        Applicant DashBoard
+    </h1>
+    {% if request.user.has_resume %}
+        <p class="text-muted">Welcome {{request.user.resume.first_name}} {{request.user.resume.last_name}}</p>
+    {% endif %}
+    <div>
+        {% if request.user.has_resume %}
+        <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Search A Job</a>
+        {% else %}
+        <p class="alert alert-danger">You don't have a resume. <a href="{% url "resume" %}">Click Here</a></p>
+        {% endif %}
+    </div>
+    {% if jobs %}
+        <div>
+            <h1 class='text-center text-primary'>Manage Jobs</h1>
+            <div>
+                <table class="table table-hover table-bordered text-center align-baseline  mx-auto">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Dead Line</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in jobs %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><a href="{% url "jobdetails" job.job.id %}">{{job.job}}</a></td>
+                            <td>{{job.job.location}}</td>
+                            {% if job.status == 'Accepted' %}
+                            <td class='bg-primary badge fs-6 text-white'>{{job.status}}</td>
+                            {% elif job.status == 'sort-listed' %}
+                            <td class='bg-secondary badge fs-6 text-white'>{{job.status}}</td>
+                            {% elif job.status == 'Declined' %}
+                            <td class='bg-danger badge fs-6 text-white'>{{job.status}}</td>
+                            {% else %}
+                            <td class='bg-warning badge fs-6 text-white'>{{job.status}}</td>
+                            {% endif %}
+                            <td>{{job.job.deadline}}</td>
+                            <td>
+                                <a href="{% url "jobdetails" job.job.id %}" class="btn btn-info">view</a>
+                                {% if not job.status == 'Accepted' %}
+                                <a href="{% url "cancel" job.id %}" class="btn btn-danger">Cancel Application</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+</section>
+{% elif request.user.user_type == "Recruiter" %}
+<section class="container card ">
+    <h1 class="text-priamry display-6 mt-5 ">
+       Recruiter DashBoard
+    </h1>
+    {% if request.user.company %}
+        <p class="text-muted">{{request.user.company.name}}</p>
+    {% endif %}
+    <div>
+        <div>
+            {% if request.user.company %}
+            <a href="{% url "applicant_list" %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Find Talents</a>
+            {% else %}
+            <p class="alert alert-danger">You don't have a company info. <a href="{% url "company" %}">Click Here</a></p>
+            {% endif %}
+        </div>
+        {% if jobs %}
+        <div>
+            <h1 class='text-center text-primary'>Manage Jobs</h1>
+            <div>
+                <table class="table table-hover table-bordered text-center align-baseline  mx-auto">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Location</th>
+                            <th>No of Applicant</th>
+                            <th>Dead Line</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in jobs %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><a href="{% url "jobdetails" job.id %}">{{job.title}}</a></td>
+                            <td>{{job.location}}</td>
+                            <td><span class='badge bg-primary fs-6 '>{{job.applyjob_set.all.count}}</span> (<a href="{% url "applied_applicants" job.id %}">view applicants</a>)</td>
+                            <td>{{job.deadline}}</td>
+                            <td>
+                                <a href="{% url "update" job.id %}" class="btn btn-warning">Update</a>
+                                <a href="{% url "delete" job.id %}" class="btn btn-danger">Delate</a>
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+{% endblock content %}

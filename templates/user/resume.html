@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<section>
+     <div class="container mt-5">
+      <div class="card w-75 mx-auto shadow">
+        <div class="bg-primary text-white px-3 py-1 text-center display-6 animated slideInDown"><span>Resume Form</span></div>
+        {% include "include/messages.html" %}
+
+        <form class='p5 mt-5 ' action="#" method = 'post' enctype="multipart/form-data">
+          {% csrf_token %}
+          {{form.media}}
+          <div class="px-5 ">
+            <label for="">Your First Name:</label>
+            {% render_field form.first_name class='form-control' placeholder='First Name' %}
+          </div>
+          <div class="px-5">
+            <label for="">Your Last Name:</label>
+            {% render_field form.last_name class='form-control' placeholder='Last Name' %}
+          </div>
+          <div class="px-5">
+            <label for="">Your Profession:</label>
+            {% render_field form.profession class='form-control' placeholder='Profession / Work title' %}
+          </div>
+          <div class="px-5 ">
+            <label for="">Address:</label><br>
+            {% render_field form.address class='form-control' placeholder='Your Address' %}
+          </div>
+          <div class="px-5 ">
+            <label for="">Educational Description:</label><br>
+            {% render_field form.education  %}
+          </div>
+          <div class="px-5 ">
+            <label for="">Your Skills:</label><br>
+            {% render_field form.skills  %}
+          </div>
+          <div class="px-5">
+            <label for="">Upload Image</label>
+            <span class="text-muted">(JPG/JPEG file only)</span>:
+            {% render_field form.profile_pic class='form-control' accept='image/' %}
+          </div>
+          <div class="px-5">
+            <i class="fas fa-user"></i>Upload Resume File<span class="text-muted">(PDF file only)</span>:
+            {% render_field form.cv class='form-control' accept="application/pdf, application/vnd.ms-excel" %}
+          </div>
+          <div class="px-5 ">
+            <label for="">About Your Self:</label><br>
+            {% render_field form.about_self  %}
+          </div>
+
+          <div class="px-5 text-center py-2">
+            <input class='btn btn-primary py-md-3 px-md-5 me-3 animated slideInUp' type="submit" value="Save Resume">
+          </div>
+        </form>
+
+      </div>
+    </div>
+</section>
+{% endblock content %}

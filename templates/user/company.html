@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<section>
+     <div class="container mt-5">
+      <div class="card w-75 mx-auto shadow">
+        <div class="bg-primary text-white px-3 py-1 text-center display-6 animated slideInDown"><span>Resume Form</span></div>
+        {% include "include/messages.html" %}
+
+        <form class='p5 mt-5 ' action="#" method = 'post' enctype="multipart/form-data">
+          {% csrf_token %}
+          {{form.media}}
+          <div class="px-5 ">
+            <label for="">Company Name</label>
+            {% render_field form.name class='form-control' placeholder='First Name' %}
+          </div>
+          <div class="px-5 ">
+            <label for="">Address:</label><br>
+            {% render_field form.address class='form-control' placeholder='Your Address' %}
+          </div>
+          <div class="px-5 ">
+            <label for="">About Company:</label><br>
+            {% render_field form.details  %}
+          </div>
+          <div class="px-5">
+            <label for="">Estabilsed Time</label>:
+            {% render_field form.est class='form-control w-25' type='date' %}
+          </div>
+          <div class="px-5">
+            <label for="">Company Logo</label>:
+            {% render_field form.logo class='form-control w-25' type='file' %}
+          </div>
+
+          <div class="px-5 text-center py-2">
+            <input class='btn btn-primary py-md-3 px-md-5 me-3 animated slideInUp' type="submit" value="Save Resume">
+          </div>
+        </form>
+
+      </div>
+    </div>
+</section>
+{% endblock content %}
